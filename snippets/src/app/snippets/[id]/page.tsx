@@ -1,5 +1,7 @@
 import { db } from "@/db";
+import Link from "next/link";
 import { notFound } from "next/navigation";
+import * as actions from "@/actions";
 
 interface SnippetShowPageProps {
   params: {
@@ -18,12 +20,25 @@ async function SnippetShowPage(props: SnippetShowPageProps) {
     return notFound();
   }
 
-  const { title, code } = snippet;
+  const { id, title, code } = snippet;
+  const deleteSnippetAction = actions.deleteSnippet.bind(null, id);
 
   return (
     <div>
-      <h3 className="font-bold m-3">{title}</h3>
-      <pre className="border rounded p-2">{code}</pre>
+      <div className="flex m-4 justify-between items-center">
+        <h1 className="font-bold text-xl">{title}</h1>
+        <div className="flex gap-4">
+          <Link href={`/snippets/${id}/edit`} className="border p-2 rounded">
+            Edit
+          </Link>
+          <form action={deleteSnippetAction}>
+            <button className="border p-2 rounded">Delete</button>
+          </form>
+        </div>
+      </div>
+      <pre className="border rounded p-3 bg-gray-200 border-gray-400">
+        <code>{code}</code>
+      </pre>
     </div>
   );
 }
