@@ -34,11 +34,11 @@ function SnippetCreatePage() {
           />
         </div>
 
-        {formState.message && (
-          <div className="border rounded p-2 bg-red-200 text-red-800">
+        {formState.message ? (
+          <div className="border rounded p-2 bg-red-200">
             {formState.message}
           </div>
-        )}
+        ) : null}
 
         <button type="submit" className="rounded p-2 bg-blue-200">
           Create
